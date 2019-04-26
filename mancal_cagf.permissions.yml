@@ -1,0 +1,20 @@
+mantenimiento actividades:
+  title: 'Manejar los registros de las actividades'
+  description: 'Ver, agregar, editar y eliminar los registros de actividades'
+  restrict access: true
+agregar actividad:
+  title: 'Agregar actividades'
+  description: 'Crear nuevas actividades'
+  restrict access: true
+detallar actividad:
+  title: 'Ver actividad'
+  description: 'Ver detalladamente una actividad'
+  restrict access: true
+editar actividad:
+  title: 'Editar actividad'
+  description: 'Editar una actividad'
+  restrict access: true
+eliminar actividad:
+  title: 'Eliminar actividad'
+  description: 'Eliminar una actividad'
+  restrict access: true

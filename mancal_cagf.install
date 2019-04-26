@@ -1,0 +1,85 @@
+<?php
+
+    //Esquema de tablas a instalar en BD
+    function mancal_cagf_schema() {
+        $schema = array();
+
+        //Tabla de actividadaes
+        $schema['Actividades'] = array(
+            'fields' => array(
+                'id_actividad' => array(
+                    'type' => 'serial',
+                    'not null' => true,
+                ), //f id
+                'titulo' => array(
+                    'type' => 'varchar',
+                    'length' => 150,
+                    'not null' => true,
+                ), //f titulo
+                'descripcion' => array(
+                    'type' => 'varchar',
+                    'length' => 1000,
+                    'not null' => false,
+                ), //f detalle
+                'encargado' => array(
+                    'type' => 'varchar',
+                    'length' => 300,
+                    'not null' => true,
+                ), //f encargado
+                'inicio_fecha' => array(
+                    'type' => 'date',
+                    'mysql_type' => 'date',
+                    'not null' => true,
+                ), //f fecha inicio
+                'hora' => array(
+                    'type' => 'time',
+                    'mysql_type' => 'time',
+                    'not null' => false,
+                ), //f hora
+                'final_fecha' => array(
+                    'type' => 'date',
+                    'mysql_type' => 'date',
+                    'not null' => false,
+                ), //f fecha final
+                'frecuencia_dias' => array(
+                    'type' => 'int',
+                    'not null' => false,
+                ),
+                'cancelado' => array(
+                    'type'=> 'int',
+                    'not null' => true,
+                    'size' => 'tiny',
+                    'default' => 0,
+                ), //f cancelado
+                'tipo_actividad' => array (
+                    'type' => 'int',
+                    'not null' => true,
+                ), //f tipo
+               
+            ), //f fields
+            'primary key' => array('id_actividad'),
+        ); //f schema actividades
+
+        //Tabla de tipos
+        $schema['Tipos_Actividades'] = array(
+            'fields' => array(
+                'id_tipo' => array(
+                    'type' => 'serial',
+                    'not null' => true,
+                ), //f if
+                'nombre' => array(
+                    'type' => 'varchar',
+                    'length' => 150,
+                    'not null' => true,
+                ), //f nombre
+                'color' => array(
+                    'type' => 'varchar',
+                    'length' => 50,
+                    'not null' => true,
+                ), //f color
+            ), //f fields
+            'primary key' => array('id_tipo'),
+        ); // f schema tipos
+
+        return $schema;
+    }

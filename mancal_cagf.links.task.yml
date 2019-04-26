@@ -1,0 +1,4 @@
+mancal_cagf.listarActividades:
+  title: Actividades
+  route_name: mancal_cagf.listarActividades
+  base_route: system.admin_content

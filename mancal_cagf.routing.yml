@@ -1,0 +1,48 @@
+mancal_cagf.listarActividades:
+  path: '/admin/content/actividades'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\ActividadesController::listarActividades'
+    _title: 'Listado de actividades'
+  requirements:
+    _permission: 'mantenimiento actividades'
+
+mancal_cagf.agregarActividades:
+  path: '/admin/content/actividades/agregar'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\ActividadesForm'
+    _title: 'Agregar Nueva Actividad'
+  requirements:
+    _permission: 'agregar actividad'
+
+mancal_cagf.detallarActividad:
+  path: '/admin/content/actividades/{actividad}/{js}'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\ActividadesController::detallarActividad'
+    _title: 'Detalle de Actividades'
+  requirements:
+    _permission: 'detallar actividad'
+    js: 'nojs|ajax'
+  options:
+    parameters:
+      actividad:
+        type: actividad
+
+mancal_cagf.editarActividad:
+  path: '/admin/content/actividades/{actividad}/edit'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\ActividadesForm'
+    _title: 'Editar Actividad'
+  requirements:
+    _permission: 'editar actividad'
+  options:
+    parameters:
+      actividad:
+        type: actividad
+
+mancal_cagf.eliminarActividad:
+  path: '/admin/content/actividades/{id}/eliminar'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\ActividadesEliminarForm'
+    _title: 'Eliminar Actividad'
+  requirements:
+    _permission: 'eliminar actividad'

@@ -1,0 +1,5 @@
+services:
+  actividad:
+    class: Drupal\mancal_cagf\ParamConverter\ActividadParamConverter
+    tags:
+      - { name: paramconverter }

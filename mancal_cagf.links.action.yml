@@ -1,0 +1,5 @@
+mancal_cagf.agregarActividades:
+  title: Agregar Actividad
+  route_name: mancal_cagf.agregarActividades
+  appears_on:
+    - mancal_cagf.listarActividades

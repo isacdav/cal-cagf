@@ -1,0 +1,5 @@
+name: Mantenimiento de Actividades CAGF
+description: Mantenimiento de las actividades que re realizan en la Casa Alfredo Gonzáles Flores que luego serán solicitadas para mostrar en el Calendario
+core: 8.x
+package: Custom
+type: module
