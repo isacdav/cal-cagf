@@ -1,4 +1,4 @@
-# cal-cagf
+# Calendario CAGF
 Proyecto universitario para TCU: Calendario para la Casa Alfredo Gonzales Flores.
 
 Modúlo para Drupal, el cual permite las funciones de un CRUD para las actividades que alimenten el calendario.
