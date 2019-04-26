@@ -2,3 +2,8 @@ mancal_cagf.listarActividades:
   title: Actividades
   route_name: mancal_cagf.listarActividades
   base_route: system.admin_content
+
+mancal_cagf.listarTipos:
+  title: Tipos de Actividades
+  route_name: mancal_cagf.listarTipos
+  base_route: system.admin_content

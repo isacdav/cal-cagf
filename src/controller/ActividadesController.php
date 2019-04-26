@@ -2,7 +2,7 @@
 
 namespace Drupal\mancal_cagf\controller;
 
-use Drupal\mancal_cagf\Forms\ActividadesTablaForm;
+use Drupal\mancal_cagf\Forms\ActividadesTabla;
 use Drupal;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,10 +41,8 @@ class ActividadesController extends ControllerBase
   {
     $content = [];
 
-    $actividades_form_inst = new ActividadesTablaForm($this->db);
-
+    $actividades_form_inst = new ActividadesTabla($this->db);
     $content['table'] = $this->formBuilder->getForm($actividades_form_inst);
-
     $content['#attached'] = ['library' => ['core/drupal.dialog.ajax']];
 
     return $content;
@@ -79,16 +77,20 @@ class ActividadesController extends ControllerBase
 
     $rows = [
       [
-        ['data' => 'Titulo', 'header' => TRUE],
+        ['data' => 'Título', 'header' => TRUE],
         $actividad->titulo,
       ],
       [
-        ['data' => 'Descripcion', 'header' => TRUE],
+        ['data' => 'Descripción', 'header' => TRUE],
         $actividad->descripcion,
       ],
       [
         ['data' => 'Encargado', 'header' => TRUE],
         $actividad->encargado,
+      ],
+      [
+        ['data' => 'Tipo de Actividad', 'header' => TRUE],
+        $actividad->tipo_actividad,
       ],
       [
         ['data' => 'Inicio', 'header' => TRUE],

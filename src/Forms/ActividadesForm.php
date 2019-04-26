@@ -22,7 +22,7 @@ class ActividadesForm extends FormBase
     {
         if ($actividad) {
             if ($actividad == 'invalid') {
-                drupal_set_message(t('Actividad erronea'), 'error');
+                drupal_set_message(t('Actividad errónea'), 'error');
                 return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
             }
             $form['id_actividad'] = [

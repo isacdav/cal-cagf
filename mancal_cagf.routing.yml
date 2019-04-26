@@ -18,7 +18,7 @@ mancal_cagf.detallarActividad:
   path: '/admin/content/actividades/{actividad}/{js}'
   defaults:
     _controller: '\Drupal\mancal_cagf\controller\ActividadesController::detallarActividad'
-    _title: 'Detalle de Actividades'
+    _title: 'Detalles de Actividad'
   requirements:
     _permission: 'detallar actividad'
     js: 'nojs|ajax'
@@ -46,3 +46,52 @@ mancal_cagf.eliminarActividad:
     _title: 'Eliminar Actividad'
   requirements:
     _permission: 'eliminar actividad'
+
+mancal_cagf.listarTipos:
+  path: '/admin/content/tipos'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\TiposController::listarTipos'
+    _title: 'Listado de Tipos de Actividad'
+  requirements:
+    _permission: 'mantenimiento tipos'
+
+mancal_cagf.agregarTipos:
+  path: '/admin/content/tipos/agregar'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\TiposForm'
+    _title: 'Agregar Nuevo Tipo de Actividad'
+  requirements:
+    _permission: 'agregar tipo'
+
+mancal_cagf.detallarTipo:
+  path: '/admin/content/tipos/{tipo}/{js}'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\TiposController::detallarTipo'
+    _title: 'Detalles de Tipo de Actividad'
+  requirements:
+    _permission: 'detallar tipo'
+    js: 'nojs|ajax'
+  options:
+    parameters:
+      tipo:
+        type: tipo
+
+mancal_cagf.editarTipo:
+  path: '/admin/content/tipos/{tipo}/edit'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\TiposForm'
+    _title: 'Editar Tipo de Actividad'
+  requirements:
+    _permission: 'editar tipo'
+  options:
+    parameters:
+      tipo:
+        type: tipo
+
+mancal_cagf.eliminarTipo:
+  path: '/admin/content/tipos/{id}/eliminar'
+  defaults:
+    _form: '\Drupal\mancal_cagf\Forms\TiposEliminarForm'
+    _title: 'Eliminar Tipo de Actividad'
+  requirements:
+    _permission: 'eliminar tipo'

@@ -3,3 +3,9 @@ services:
     class: Drupal\mancal_cagf\ParamConverter\ActividadParamConverter
     tags:
       - { name: paramconverter }
+
+services:
+  tipo:
+    class: Drupal\mancal_cagf\ParamConverter\TipoParamConverter
+    tags:
+      - { name: paramconverter }
