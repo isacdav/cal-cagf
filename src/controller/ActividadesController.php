@@ -2,7 +2,7 @@
 
 namespace Drupal\mancal_cagf\controller;
 
-use Drupal\mancal_cagf\Forms\ActividadesTablaForm;
+use Drupal\mancal_cagf\Forms\ActividadesTabla;
 use Drupal;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\mancal_cagf\Repository\TiposRepo;
 
 class ActividadesController extends ControllerBase
 {
@@ -41,10 +42,8 @@ class ActividadesController extends ControllerBase
   {
     $content = [];
 
-    $actividades_form_inst = new ActividadesTablaForm($this->db);
-
+    $actividades_form_inst = new ActividadesTabla($this->db);
     $content['table'] = $this->formBuilder->getForm($actividades_form_inst);
-
     $content['#attached'] = ['library' => ['core/drupal.dialog.ajax']];
 
     return $content;
@@ -55,6 +54,15 @@ class ActividadesController extends ControllerBase
     if ($actividad == 'invalid') {
       drupal_set_message(t('Actividad no valida'), 'error');
       return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
+    }
+
+    $tipos_de_actividad_bd = TiposRepo::listarTodos();
+
+    $tipo_mostrar = 'El tipo de actividad de esta actividad no se encuentra. Se debe asignar uno nuevo.';
+    foreach ($tipos_de_actividad_bd as $tipo) {
+      if ($tipo->id_tipo == $actividad->tipo_actividad) {
+        $tipo_mostrar = $tipo->nombre;
+      }
     }
 
     $frequencia_mostrar = '';
@@ -79,16 +87,20 @@ class ActividadesController extends ControllerBase
 
     $rows = [
       [
-        ['data' => 'Titulo', 'header' => TRUE],
+        ['data' => 'Título', 'header' => TRUE],
         $actividad->titulo,
       ],
       [
-        ['data' => 'Descripcion', 'header' => TRUE],
+        ['data' => 'Descripción', 'header' => TRUE],
         $actividad->descripcion,
       ],
       [
         ['data' => 'Encargado', 'header' => TRUE],
         $actividad->encargado,
+      ],
+      [
+        ['data' => 'Tipo de Actividad', 'header' => TRUE],
+        $tipo_mostrar,
       ],
       [
         ['data' => 'Inicio', 'header' => TRUE],

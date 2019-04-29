@@ -6,22 +6,21 @@ use Drupal;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\mancal_cagf\Repository\ActividadesRepo;
+use Drupal\mancal_cagf\Repository\TiposRepo;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class ActividadesEliminarForm extends ConfirmFormBase
+class TiposEliminarForm extends ConfirmFormBase
 {
-
     protected $id;
 
     public function getFormId()
     {
-        return 'actividades_eliminar';
+        return 'tipos_eliminar';
     }
 
     public function getQuestion()
     {
-        return t('¿Desea eliminar la actividad %id?', ['%id' => $this->id]);
+        return t('¿Desea eliminar el tipo de actividad %id?', ['%id' => $this->id]);
     }
 
     public function getConfirmText()
@@ -31,19 +30,19 @@ class ActividadesEliminarForm extends ConfirmFormBase
 
     public function getCancelRoute()
     {
-        return new Url('mancal_cagf.listarActividades');
+        return new Url('mancal_cagf.listarTipos');
     }
 
     public function getCancelUrl()
     {
-        return new Url('mancal_cagf.listarActividades');
+        return new Url('mancal_cagf.listarTipos');
     }
 
     public function buildForm(array $form, FormStateInterface $form_state, $id = NULL)
     {
-        if (!ActividadesRepo::existe($id)) {
-            drupal_set_message(t('Actividad no válida'), 'error');
-            return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
+        if (!TiposRepo::existe($id)) {
+            drupal_set_message(t('Tipo de actividad no válido'), 'error');
+            return new RedirectResponse(Drupal::url('mancal_cagf.listarTipos'));
         }
         $this->id = $id;
         return parent::buildForm($form, $form_state);
@@ -51,8 +50,8 @@ class ActividadesEliminarForm extends ConfirmFormBase
 
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
-        ActividadesRepo::elminar($this->id);
-        drupal_set_message(t('La actividad %id ha sido elminada', ['%id' => $this->id]));
-        $form_state->setRedirect('mancal_cagf.listarActividades');
+        TiposRepo::elminar($this->id);
+        drupal_set_message(t('El tipo de actividad %id ha sido elminado', ['%id' => $this->id]));
+        $form_state->setRedirect('mancal_cagf.listarTipos');
     }
 }

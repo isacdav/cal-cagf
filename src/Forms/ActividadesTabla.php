@@ -7,15 +7,11 @@ use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
-use Drupal\Component\Utility\Html;
-use Drupal\mancal_cagf\Repository\ActividadesRepo;
 
-class ActividadesTablaForm implements FormInterface
+class ActividadesTabla implements FormInterface
 {
 
   protected $db;
-
-  private $searchKey;
 
   public function __construct(Connection $con)
   {
@@ -40,14 +36,14 @@ class ActividadesTablaForm implements FormInterface
 
     $header = [
       ['data' => t('Id'), 'field' => 'a.id_actividad'],
-      ['data' => t('Titulo'), 'field' => 'a.titulo'],
-      ['data' => t('Descripcion'), 'field' => 'a.descripcion'],
+      ['data' => t('Título'), 'field' => 'a.titulo'],
+      ['data' => t('Descripción'), 'field' => 'a.descripcion'],
       ['data' => t('Encargado'), 'field' => 'a.encargado'],
       ['data' => t('Fecha de Inicio'), 'field' => 'a.inicio_fecha'],
       ['data' => t('Fecha de Fin'), 'field' => 'a.final_fecha'],
       ['data' => t('Hora'), 'field' => 'a.inicio_hora'],
       ['data' => t('Cancelado'), 'field' => 'a.cancelado'],
-      'actions' => 'Acciones',
+      'actions' => 'Operaciones',
     ];
 
     $query = $this->db->select('actividades', 'a')

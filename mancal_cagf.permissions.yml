@@ -18,3 +18,24 @@ eliminar actividad:
   title: 'Eliminar actividad'
   description: 'Eliminar una actividad'
   restrict access: true
+
+mantenimiento tipos:
+  title: 'Manejar los registros de los tipos de actividades'
+  description: 'Ver, agregar, editar y eliminar los registros de tipos de actividades'
+  restrict access: true
+agregar tipo:
+  title: 'Agregar tipos de actividades'
+  description: 'Crear nuevos tipos de actividades'
+  restrict access: true
+detallar tipo:
+  title: 'Ver tipo de actividad'
+  description: 'Ver detalladamente un tipo de actividad'
+  restrict access: true
+editar tipo:
+  title: 'Editar tipo de actividad'
+  description: 'Editar un tipo de actividad'
+  restrict access: true
+eliminar tipo:
+  title: 'Eliminar tipo de actividad'
+  description: 'Eliminar un tipo de actividad'
+  restrict access: true
