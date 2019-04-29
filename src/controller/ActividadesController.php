@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\mancal_cagf\Repository\TiposRepo;
 
 class ActividadesController extends ControllerBase
 {
@@ -55,6 +56,15 @@ class ActividadesController extends ControllerBase
       return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
     }
 
+    $tipos_de_actividad_bd = TiposRepo::listarTodos();
+
+    $tipo_mostrar = 'El tipo de actividad de esta actividad no se encuentra. Se debe asignar uno nuevo.';
+    foreach ($tipos_de_actividad_bd as $tipo) {
+      if ($tipo->id_tipo == $actividad->tipo_actividad) {
+        $tipo_mostrar = $tipo->nombre;
+      }
+    }
+
     $frequencia_mostrar = '';
     if (!empty($actividad->frecuencia_dias)) {
       $numero_freq = $actividad->frecuencia_dias;
@@ -90,7 +100,7 @@ class ActividadesController extends ControllerBase
       ],
       [
         ['data' => 'Tipo de Actividad', 'header' => TRUE],
-        $actividad->tipo_actividad,
+        $tipo_mostrar,
       ],
       [
         ['data' => 'Inicio', 'header' => TRUE],

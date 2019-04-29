@@ -70,10 +70,10 @@ class TiposForm extends FormBase
 
     public function validateForm(array &$form, FormStateInterface $form_state)
     {
-        /*$color = $form_state->getValue('color');
-        if (!preg_match('//', $color)) {
+        $color = $form_state->getValue('color');
+        if (!preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $color)) {
             $form_state->setErrorByName('color', $this->t('El color brindado no está el formato solicitado'));
-        }*/
+        }
     }
 
     public function submitForm(array &$form, FormStateInterface $form_state)

@@ -6,6 +6,7 @@ use Drupal;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Drupal\Core\Database\Connection;
 
 class TiposTabla implements FormInterface
@@ -65,6 +66,10 @@ class TiposTabla implements FormInterface
 
             $ajax_view_link = Drupal::l($row->nombre, $ajax_view_url);
 
+
+            $color_link = $row->color;
+            $link_color_view = Link::fromTextAndUrl($color_link, Url::fromUri('https://www.color-hex.com/color/' . ltrim($color_link, '#')));
+
             $drop_button = [
                 '#type' => 'dropbutton',
                 '#links' => [
@@ -86,7 +91,7 @@ class TiposTabla implements FormInterface
             $rows[$row->id_tipo] = [
                 [sprintf("%04s", $row->id_tipo)],
                 [$ajax_view_link],
-                [$row->color],
+                [$link_color_view],
                 'actions' => [
                     'data' => $drop_button,
                 ],

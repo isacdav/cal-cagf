@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Url;
 use Drupal\mancal_cagf\Repository\ActividadesRepo;
+use Drupal\mancal_cagf\Repository\TiposRepo;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ActividadesForm extends FormBase
@@ -29,6 +30,16 @@ class ActividadesForm extends FormBase
                 '#type' => 'hidden',
                 '#value' => $actividad->id_actividad,
             ];
+        }
+
+        $tipos_de_actividad_bd = TiposRepo::listarTodos();
+        if (!$tipos_de_actividad_bd) {
+            drupal_set_message(t('Error, debe de haber al menos un Tipo de Actividad'), 'error');
+            return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
+        }
+        $tipos_select = ['' => 'Seleccionar'];
+        foreach ($tipos_de_actividad_bd as $tipo) {
+            $tipos_select[$tipo->id_tipo] = $tipo->nombre;
         }
 
         $form['#attributes']['novalidate'] = '';
@@ -76,13 +87,7 @@ class ActividadesForm extends FormBase
         $form['general']['tipo_actividad'] = [
             '#type' => 'select',
             '#title' => t('Tipo de Atividad'),
-            '#options' => [
-                '' => 'Seleccionar',
-                1 => 'Tertulia',
-                2 => 'Concierto',
-                3 => 'Taller',
-                4 => 'Exposicion',
-            ],
+            '#options' => $tipos_select,
             '#required' => TRUE,
             '#default_value' => ($actividad) ? $actividad->tipo_actividad : '',
         ];
@@ -168,7 +173,6 @@ class ActividadesForm extends FormBase
                 $form_state->setErrorByName('final_fecha', $this->t('La fecha final debe ser después de la inicial'));
             }
         }
-
     }
 
     public function submitForm(array &$form, FormStateInterface $form_state)
@@ -209,10 +213,10 @@ class ActividadesForm extends FormBase
             $fields['cancelado'] = $cancelado;
 
             ActividadesRepo::actualizar($id, $fields);
-            $message = 'Actividad '. $fields['titulo'] .' actualizada';
+            $message = 'Actividad ' . $fields['titulo'] . ' actualizada';
         } else {
             ActividadesRepo::agregar($fields);
-            $message = 'Nueva actividad '. $fields['titulo'] .' guardada';
+            $message = 'Nueva actividad ' . $fields['titulo'] . ' guardada';
         }
 
         drupal_set_message($message);
