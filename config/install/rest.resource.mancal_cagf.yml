@@ -1,0 +1,10 @@
+id: mancal_cagf
+plugin_id: mancal_cagf
+granularity: method
+configuration:
+  GET:
+    supported_formats:
+      - json
+    supported_auth:
+      - basic_auth
+      - cookie
