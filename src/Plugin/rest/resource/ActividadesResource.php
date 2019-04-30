@@ -4,6 +4,7 @@ namespace Drupal\mancal_cagf\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\mancal_cagf\Repository\ActividadesRepo;
 
 /**
  * Provides an API for the calendar
@@ -25,14 +26,21 @@ class ActividadesResource extends ResourceBase
      */
     public function get()
     {
-        $nombre = 'November Rain';
-        $desc = NULL;
+        $actividades_bd = ActividadesRepo::listarTodos();
 
-        $response = [
-            'id' => '11',
-            'nombre' => $nombre,
-            'desc' => $desc
+        $response = [];
+        foreach($actividades_bd as $act) {
+            $response = [
+                'id' => $act->id_actividad,
+                'title' => $act->titulo,
+                'desc' => $act->descripcion,
+                'start' => $act->inicio_fecha,
+                'end' => $act->final_fecha,
+                'daysOfWeek' => $act->frecuencia_dias,
             ];
+        }
+
         return new ResourceResponse($response);
     }
+
 }
