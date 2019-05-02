@@ -39,3 +39,7 @@ eliminar tipo:
   title: 'Eliminar tipo de actividad'
   description: 'Eliminar un tipo de actividad'
   restrict access: true
+
+API actividades:
+  title: 'Rest API Actividades'
+  description: 'Rest API que consumirá el calendario'
