@@ -95,3 +95,11 @@ mancal_cagf.eliminarTipo:
     _title: 'Eliminar Tipo de Actividad'
   requirements:
     _permission: 'eliminar tipo'
+
+mancal_cagf.getActividades:
+  path: 'api/cal/actividades'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\RestApiController::getActividades'
+    methods: [GET]
+  requirements:
+    _permission: 'API actividades'
