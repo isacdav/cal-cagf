@@ -51,10 +51,10 @@
                     'size' => 'tiny',
                     'default' => 0,
                 ), //f cancelado
-                'tipo_actividad' => array (
+                'categoria' => array (
                     'type' => 'int',
                     'not null' => true,
-                ), //f tipo
+                ), //f categoria
                
             ), //f fields
             'primary key' => array('id_actividad'),

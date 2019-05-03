@@ -4,7 +4,6 @@ namespace Drupal\mancal_cagf\controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\mancal_cagf\Repository\ActividadesRepo;
-use Drupal\mancal_cagf\Repository\TiposRepo;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RestApiController extends ControllerBase
@@ -13,7 +12,6 @@ class RestApiController extends ControllerBase
     public function getActividades()
     {
         $actividades_bd = ActividadesRepo::listarTodos();
-        $tipos_bd = TiposRepo::listarTodos();
 
         $response = [];
         
@@ -32,7 +30,7 @@ class RestApiController extends ControllerBase
                     $hora = $act->hora . '-06:00';
                 }
                 
-                //control de tipos
+                //control de categorias
     
                 if ($act->frecuencia_dias) {
                     $response[] = array(

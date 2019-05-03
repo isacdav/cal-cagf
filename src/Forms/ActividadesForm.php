@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Url;
 use Drupal\mancal_cagf\Repository\ActividadesRepo;
-use Drupal\mancal_cagf\Repository\TiposRepo;
+use Drupal\mancal_cagf\Repository\CategoriasRepo;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ActividadesForm extends FormBase
@@ -32,14 +32,15 @@ class ActividadesForm extends FormBase
             ];
         }
 
-        $tipos_de_actividad_bd = TiposRepo::listarTodos();
-        if (!$tipos_de_actividad_bd) {
-            drupal_set_message(t('Error, debe de haber al menos un Tipo de Actividad'), 'error');
+        $categorias_lista = CategoriasRepo::getCategorias();
+        if (!$categorias_lista) {
+            drupal_set_message(t('Error, no se encuentran categorias'), 'error');
             return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
         }
-        $tipos_select = ['' => 'Seleccionar'];
-        foreach ($tipos_de_actividad_bd as $tipo) {
-            $tipos_select[$tipo->id_tipo] = $tipo->nombre;
+        
+        $categorias_select = ['' => 'Seleccionar'];
+        foreach ($categorias_lista as $cat) {
+            $categorias_select[$cat['id_cat']] = $cat['nombre'];
         }
 
         $form['#attributes']['novalidate'] = '';
@@ -84,12 +85,12 @@ class ActividadesForm extends FormBase
             '#default_value' => ($actividad) ? $actividad->encargado : '',
         ];
 
-        $form['general']['tipo_actividad'] = [
+        $form['general']['categoria'] = [
             '#type' => 'select',
-            '#title' => t('Tipo de Atividad'),
-            '#options' => $tipos_select,
+            '#title' => t('Categoria'),
+            '#options' => $categorias_select,
             '#required' => TRUE,
-            '#default_value' => ($actividad) ? $actividad->tipo_actividad : '',
+            '#default_value' => ($actividad) ? $actividad->categoria : '',
         ];
 
         $form['fechas'] = [
@@ -186,7 +187,7 @@ class ActividadesForm extends FormBase
         $fields = [
             'titulo' => SafeMarkup::checkPlain($form_state->getValue('titulo')),
             'descripcion' => $form_state->getValue('descripcion'),
-            'tipo_actividad' => $form_state->getValue('tipo_actividad'),
+            'categoria' => $form_state->getValue('categoria'),
             'encargado' => $form_state->getValue('encargado'),
             'inicio_fecha' => $form_state->getValue('inicio_fecha'),
         ];

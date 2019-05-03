@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\mancal_cagf\Repository\TiposRepo;
+use Drupal\mancal_cagf\Repository\CategoriasRepo;
 
 class ActividadesController extends ControllerBase
 {
@@ -56,14 +56,11 @@ class ActividadesController extends ControllerBase
       return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
     }
 
-    $tipos_de_actividad_bd = TiposRepo::listarTodos();
+    $categorias_lista = CategoriasRepo::getCategorias();
 
-    $tipo_mostrar = 'El tipo de actividad de esta actividad no se encuentra. Se debe asignar uno nuevo.';
-    foreach ($tipos_de_actividad_bd as $tipo) {
-      if ($tipo->id_tipo == $actividad->tipo_actividad) {
-        $tipo_mostrar = $tipo->nombre;
-      }
-    }
+    $categoria_mostrar = 'Ocurrió un error al mostrar la categoría.';
+    $categoria_busq = CategoriasRepo::buscarCategoria($actividad->categoria);
+    $categoria_mostrar = $categoria_busq['nombre'];
 
     $frequencia_mostrar = '';
     if (!empty($actividad->frecuencia_dias)) {
@@ -99,8 +96,8 @@ class ActividadesController extends ControllerBase
         $actividad->encargado,
       ],
       [
-        ['data' => 'Tipo de Actividad', 'header' => TRUE],
-        $tipo_mostrar,
+        ['data' => 'Categoría', 'header' => TRUE],
+        $categoria_mostrar,
       ],
       [
         ['data' => 'Inicio', 'header' => TRUE],
