@@ -60,26 +60,5 @@
             'primary key' => array('id_actividad'),
         ); //f schema actividades
 
-        //Tabla de tipos
-        $schema['Tipos_Actividades'] = array(
-            'fields' => array(
-                'id_tipo' => array(
-                    'type' => 'serial',
-                    'not null' => true,
-                ), //f if
-                'nombre' => array(
-                    'type' => 'varchar',
-                    'length' => 150,
-                    'not null' => true,
-                ), //f nombre
-                'color' => array(
-                    'type' => 'varchar',
-                    'length' => 50,
-                    'not null' => true,
-                ), //f color
-            ), //f fields
-            'primary key' => array('id_tipo'),
-        ); // f schema tipos
-
         return $schema;
     }

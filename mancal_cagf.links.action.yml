@@ -3,9 +3,3 @@ mancal_cagf.agregarActividades:
   route_name: mancal_cagf.agregarActividades
   appears_on:
     - mancal_cagf.listarActividades
-
-mancal_cagf.agregarTipos:
-  title: Agregar Tipo de Actividad
-  route_name: mancal_cagf.agregarTipos
-  appears_on:
-    - mancal_cagf.listarTipos
