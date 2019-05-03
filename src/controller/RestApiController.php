@@ -4,6 +4,7 @@ namespace Drupal\mancal_cagf\controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\mancal_cagf\Repository\ActividadesRepo;
+use Drupal\mancal_cagf\Repository\CategoriasRepo;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RestApiController extends ControllerBase
@@ -30,19 +31,24 @@ class RestApiController extends ControllerBase
                     $hora = $act->hora . '-06:00';
                 }
                 
-                //control de categorias
-    
+                $categoria = CategoriasRepo::buscarCategoria($act->categoria);
+                
                 if ($act->frecuencia_dias) {
                     $response[] = array(
                         'id' => $act->id_actividad,
                         'title' => $act->titulo,
                         'desc' => $act->descripcion,
                         'inCharge' => $act->encargado,
+                        'contact' => $act->contacto,
+                        'link_fb' => $act->link_publicacion_fb,
                         'canceled' => $act->cancelado,
+                        'reason' => $act->motivo_cancelacion,
                         'startRecur' => $fecha_i,
                         'endRecur' => $fecha_f,
                         'startTime' => $hora,
                         'daysOfWeek' => $act->frecuencia_dias - 1,
+                        'category' => $categoria['nombre'],
+                        'color' => $categoria['color'],
                     );
                 } else {
                     if ($act->hora) {
@@ -53,9 +59,14 @@ class RestApiController extends ControllerBase
                         'title' => $act->titulo,
                         'desc' => $act->descripcion,
                         'inCharge' => $act->encargado,
+                        'contact' => $act->contacto,
+                        'link_fb' => $act->link_publicacion_fb,
                         'canceled' => $act->cancelado,
+                        'reason' => $act->motivo_cancelacion,
                         'start' => $fecha_i,
                         'end' => $fecha_f,
+                        'category' => $categoria['nombre'],
+                        'color' => $categoria['color'],
                     );
                 }
                 

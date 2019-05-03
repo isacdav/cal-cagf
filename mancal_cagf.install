@@ -24,8 +24,18 @@
                 'encargado' => array(
                     'type' => 'varchar',
                     'length' => 300,
-                    'not null' => true,
+                    'not null' => false,
                 ), //f encargado
+                'contacto' => array(
+                    'type' => 'varchar',
+                    'length' => 400,
+                    'not null' => false,
+                ), //f contacto
+                'link_publicacion_fb' => array(
+                    'type' => 'varchar',
+                    'length' => 300,
+                    'not null' => false,
+                ), //f link face
                 'inicio_fecha' => array(
                     'type' => 'date',
                     'mysql_type' => 'date',
@@ -51,6 +61,11 @@
                     'size' => 'tiny',
                     'default' => 0,
                 ), //f cancelado
+                'motivo_cancelacion' => array(
+                    'type' => 'varchar',
+                    'length' => 500,
+                    'not null' => false,
+                ), //f motivo cancelacion
                 'categoria' => array (
                     'type' => 'int',
                     'not null' => true,

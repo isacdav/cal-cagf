@@ -56,8 +56,6 @@ class ActividadesController extends ControllerBase
       return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
     }
 
-    $categorias_lista = CategoriasRepo::getCategorias();
-
     $categoria_mostrar = 'Ocurrió un error al mostrar la categoría.';
     $categoria_busq = CategoriasRepo::buscarCategoria($actividad->categoria);
     $categoria_mostrar = $categoria_busq['nombre'];
@@ -82,44 +80,81 @@ class ActividadesController extends ControllerBase
       }
     }
 
-    $rows = [
-      [
-        ['data' => 'Título', 'header' => TRUE],
-        $actividad->titulo,
-      ],
-      [
+    $rows[] = [
+      ['data' => 'Título', 'header' => TRUE],
+      $actividad->titulo,
+    ];
+
+    if ($actividad->descripcion) {
+      $rows[] = [
         ['data' => 'Descripción', 'header' => TRUE],
         $actividad->descripcion,
-      ],
-      [
+      ];
+    }
+
+
+
+    if ($actividad->encargado) {
+      $rows[] = [
         ['data' => 'Encargado', 'header' => TRUE],
         $actividad->encargado,
-      ],
-      [
-        ['data' => 'Categoría', 'header' => TRUE],
-        $categoria_mostrar,
-      ],
-      [
-        ['data' => 'Inicio', 'header' => TRUE],
-        date("d/m/Y", strtotime($actividad->inicio_fecha)),
-      ],
-      [
-        ['data' => 'Fin', 'header' => TRUE],
-        is_null($actividad->final_fecha) ? '' : date("d/m/Y", strtotime($actividad->final_fecha)),
-      ],
-      [
-        ['data' => 'Hora', 'header' => TRUE],
-        $actividad->hora,
-      ],
-      [
+      ];
+    }
+
+    if ($actividad->contacto) {
+      $rows[] = [
+        ['data' => 'Información de contacto', 'header' => TRUE],
+        $actividad->contacto,
+      ];
+    }
+
+    if ($actividad->link_publicacion_fb) {
+      $rows[] = [
+        ['data' => 'Enlace a publicación de facebook', 'header' => TRUE],
+        $actividad->link_publicacion_fb,
+      ];
+    }
+
+    $rows[] = [
+      ['data' => 'Categoría', 'header' => TRUE],
+      $categoria_mostrar,
+    ];
+
+    $rows[] = [
+      ['data' => 'Fecha de Inicio', 'header' => TRUE],
+      date("d/m/Y", strtotime($actividad->inicio_fecha)),
+    ];
+
+    $rows[] = [
+      ['data' => 'Fecha Final', 'header' => TRUE],
+      is_null($actividad->final_fecha) ? '' : date("d/m/Y", strtotime($actividad->final_fecha)),
+    ];
+
+    $rows[] = [
+      ['data' => 'Hora', 'header' => TRUE],
+      $actividad->hora,
+    ];
+
+
+    if ($actividad->frequencia_mostrar) {
+      $rows[] = [
         ['data' => 'Día específico en que se repetirá', 'header' => TRUE],
         $frequencia_mostrar,
-      ],
-      [
-        ['data' => 'Cancelado', 'header' => TRUE],
-        ($actividad->cancelado == 0) ? 'No' : 'Si',
-      ],
+      ];
+    }
+
+    $rows[] = [
+      ['data' => 'Cancelado', 'header' => TRUE],
+      ($actividad->cancelado == 0) ? 'No' : 'Si',
     ];
+
+
+    if ($actividad->cancelado == 1) {
+      $rows[] = [
+        ['data' => 'Motivo de Cancelación', 'header' => TRUE],
+        $actividad->motivo_cancelacion,
+      ];
+    }
 
     $content['details'] = [
       '#type' => 'table',
