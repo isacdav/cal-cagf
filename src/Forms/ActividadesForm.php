@@ -37,7 +37,7 @@ class ActividadesForm extends FormBase
             drupal_set_message(t('Error, no se encuentran categorias'), 'error');
             return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
         }
-        
+
         $categorias_select = ['' => 'Seleccionar'];
         foreach ($categorias_lista as $cat) {
             $categorias_select[$cat['id_cat']] = $cat['nombre'];
@@ -56,6 +56,12 @@ class ActividadesForm extends FormBase
                 '#type' => 'checkbox',
                 '#title' => t('Cancelado'),
                 '#default_value' => ($actividad) ? $actividad->cancelado : 0,
+            ];
+
+            $form['cancelacion']['motivo_cancelacion'] = [
+                '#type' => 'textarea',
+                '#title' => t('Motivo de Cancelación'),
+                '#default_value' => ($actividad) ? $actividad->motivo_cancelacion : 0,
             ];
         }
 
@@ -78,19 +84,36 @@ class ActividadesForm extends FormBase
             '#default_value' => ($actividad) ? $actividad->descripcion : '',
         ];
 
-        $form['general']['encargado'] = [
-            '#type' => 'textfield',
-            '#title' => t('Persona a Cargo'),
-            '#required' => TRUE,
-            '#default_value' => ($actividad) ? $actividad->encargado : '',
-        ];
-
         $form['general']['categoria'] = [
             '#type' => 'select',
             '#title' => t('Categoria'),
             '#options' => $categorias_select,
             '#required' => TRUE,
             '#default_value' => ($actividad) ? $actividad->categoria : '',
+        ];
+
+        $form['contacto'] = [
+            '#type' => 'details',
+            "#title" => "Información de Contacto",
+            '#open' => TRUE,
+        ];
+
+        $form['contacto']['encargado'] = [
+            '#type' => 'textfield',
+            '#title' => t('Persona a Cargo'),
+            '#default_value' => ($actividad) ? $actividad->encargado : '',
+        ];
+
+        $form['contacto']['contacto'] = [
+            '#type' => 'textfield',
+            '#title' => t('Contacto'),
+            '#default_value' => ($actividad) ? $actividad->contacto : '',
+        ];
+
+        $form['contacto']['link_publicacion_fb'] = [
+            '#type' => 'textfield',
+            '#title' => t('Enlace a publicación de Facebook'),
+            '#default_value' => ($actividad) ? $actividad->link_publicacion_fb : '',
         ];
 
         $form['fechas'] = [
@@ -183,6 +206,7 @@ class ActividadesForm extends FormBase
         $frecuencia_dias = $form_state->getValue('frecuencia_dias');
         $hora = $form_state->getValue('hora');
         $cancelado = $form_state->getValue('cancelado');
+        $motivo_cancelacion = $form_state->getValue('motivo_cancelacion');
 
         $fields = [
             'titulo' => SafeMarkup::checkPlain($form_state->getValue('titulo')),
@@ -190,6 +214,8 @@ class ActividadesForm extends FormBase
             'categoria' => $form_state->getValue('categoria'),
             'encargado' => $form_state->getValue('encargado'),
             'inicio_fecha' => $form_state->getValue('inicio_fecha'),
+            'contacto' => $form_state->getValue('contacto'),
+            'link_publicacion_fb' => $form_state->getValue('link_publicacion_fb'),
         ];
 
         if (date("d/m/Y", strtotime($fecha_final)) != date("d/m/Y", strtotime('31/12/1969'))) {
@@ -212,6 +238,7 @@ class ActividadesForm extends FormBase
 
         if (!empty($id) && ActividadesRepo::existe($id)) {
             $fields['cancelado'] = $cancelado;
+            $fields['motivo_cancelacion'] = $motivo_cancelacion;
 
             ActividadesRepo::actualizar($id, $fields);
             $message = 'Actividad ' . $fields['titulo'] . ' actualizada';
