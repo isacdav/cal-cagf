@@ -7,4 +7,4 @@ Para su instalación se debe descomprimir el modulo en la carpeta 'modules' de D
 Luego se procede a la sección de 'Ampliar' en Drupal y seleccionar 'Mantenimiento de Actividades CAGF'.
 
 Cuenta con un REST API que funcionará para enviar las actividades al calendario.
-El REST se accede a /api/mancal_cagf
+Para consumir el API se accede a /api/cal/actividades
