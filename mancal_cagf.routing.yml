@@ -54,3 +54,11 @@ mancal_cagf.getActividades:
     methods: [GET]
   requirements:
     _permission: 'API actividades'
+
+mancal_cagf.verCategorias:
+  path: '/admin/content/actividades/categorias'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\CategoriasController::verCategorias'
+    _title: 'Ver Categorias'
+  requirements:
+    _permission: 'ver categorias'

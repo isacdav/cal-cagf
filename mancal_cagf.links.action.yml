@@ -3,3 +3,9 @@ mancal_cagf.agregarActividades:
   route_name: mancal_cagf.agregarActividades
   appears_on:
     - mancal_cagf.listarActividades
+
+mancal_cagf.verCategorias:
+  title: Ver Categorias
+  route_name: mancal_cagf.verCategorias
+  appears_on:
+    - mancal_cagf.listarActividades
