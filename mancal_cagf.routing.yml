@@ -6,8 +6,16 @@ mancal_cagf.listarActividades:
   requirements:
     _permission: 'mantenimiento actividades'
 
-mancal_cagf.agregarActividades:
+mancal_cagf.agregar:
   path: '/admin/content/actividades/agregar'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\ActividadesController::agregar'
+    _title: 'Seleccionar la solución que mas se adapte'
+  requirements:
+    _permission: 'agregar'
+
+mancal_cagf.agregarActividades:
+  path: '/admin/content/actividades/agregar/{tipo}'
   defaults:
     _form: '\Drupal\mancal_cagf\Forms\ActividadesForm'
     _title: 'Agregar Nueva Actividad'
@@ -54,3 +62,11 @@ mancal_cagf.getActividades:
     methods: [GET]
   requirements:
     _permission: 'API actividades'
+
+mancal_cagf.verCategorias:
+  path: '/admin/content/actividades/categorias'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\CategoriasController::verCategorias'
+    _title: 'Ver Categorias'
+  requirements:
+    _permission: 'ver categorias'

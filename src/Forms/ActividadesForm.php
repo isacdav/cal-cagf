@@ -19,7 +19,7 @@ class ActividadesForm extends FormBase
         return 'actividades_agregar';
     }
 
-    public function buildForm(array $form, FormStateInterface $form_state, $actividad = NULL)
+    public function buildForm(array $form, FormStateInterface $form_state, $actividad = NULL, $tipo = NULL)
     {
         if ($actividad) {
             if ($actividad == 'invalid') {
@@ -129,33 +129,42 @@ class ActividadesForm extends FormBase
             '#default_value' => ($actividad) ? $actividad->inicio_fecha : '',
         ];
 
-        $form['fechas']['hora'] = [
-            '#type' => 'textfield',
-            '#title' => t('Hora'),
-            '#default_value' => ($actividad) ? $actividad->hora : '',
-        ];
+        if ($tipo == 2 || $tipo == 4 || $actividad->hora) {
+            $form['fechas']['hora'] = [
+                '#type' => 'textfield',
+                '#title' => t('Hora'),
+                '#required' => TRUE,
+                '#default_value' => ($actividad) ? substr($actividad->hora, 0, 5) : '',
+            ];
+        }
 
-        $form['fechas']['final_fecha'] = [
-            '#type' => 'date',
-            '#title' => t('Fecha Final'),
-            '#default_value' => ($actividad) ? $actividad->final_fecha : '',
-        ];
+        if ($tipo == 3 || $tipo == 4 || $actividad->final_fecha) {
+            $form['fechas']['final_fecha'] = [
+                '#type' => 'date',
+                '#title' => t('Fecha Final'),
+                '#required' => TRUE,
+                '#default_value' => ($actividad) ? $actividad->final_fecha : '',
+            ];
+        }
 
-        $form['fechas']['frecuencia_dias'] = [
-            '#type' => 'select',
-            '#title' => t('Dia específico en que se repetirá'),
-            '#options' => [
-                '' => 'Seleccionar',
-                1 => 'Domingo',
-                2 => 'Lunes',
-                3 => 'Martes',
-                4 => 'Miércoles',
-                5 => 'Jueves',
-                6 => 'Viernes',
-                7 => 'Sábado',
-            ],
-            '#default_value' => ($actividad) ? $actividad->frecuencia_dias : '',
-        ];
+        if ($tipo == 4 || $actividad->frecuencia_dias) {
+            $form['fechas']['frecuencia_dias'] = [
+                '#type' => 'select',
+                '#title' => t('Dia específico en que se repetirá'),
+                '#options' => [
+                    '' => 'Seleccionar',
+                    1 => 'Domingo',
+                    2 => 'Lunes',
+                    3 => 'Martes',
+                    4 => 'Miércoles',
+                    5 => 'Jueves',
+                    6 => 'Viernes',
+                    7 => 'Sábado',
+                ],
+                '#required' => TRUE,
+                '#default_value' => ($actividad) ? $actividad->frecuencia_dias : '',
+            ];
+        }
 
         $form['actions'] = ['#type' => 'actions'];
         $form['actions']['submit'] = [
@@ -180,7 +189,7 @@ class ActividadesForm extends FormBase
         $hora = $form_state->getValue('hora');
         if (!empty($hora)) {
             if (!preg_match('/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', $hora)) {
-                $form_state->setErrorByName('hora', $this->t('La hora brindada no está en el formato solicitado'));
+                $form_state->setErrorByName('hora', $this->t('La hora brindada no está en el formato solicitado. "00:00".'));
             }
         }
 
@@ -194,7 +203,7 @@ class ActividadesForm extends FormBase
 
             //Comparacion
             if ($f_final < $f_inicio) {
-                $form_state->setErrorByName('final_fecha', $this->t('La fecha final debe ser después de la inicial'));
+                $form_state->setErrorByName('final_fecha', $this->t('La fecha final debe ser después de la inicial.'));
             }
         }
     }
