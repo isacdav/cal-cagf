@@ -93,7 +93,7 @@ class ActividadesTabla implements FormInterface
                 [$row->encargado],
                 [date("d/m/Y", strtotime($row->inicio_fecha))],
                 [is_null($row->final_fecha) ? '' : date("d/m/Y", strtotime($row->final_fecha))],
-                [$row->hora],
+                [substr($row->hora, 0, 5)],
                 [($row->cancelado == 0) ? 'No' : 'Si'],
                 'actions' => [
                     'data' => $drop_button,

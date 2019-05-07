@@ -37,6 +37,83 @@ class ActividadesController extends ControllerBase
         );
     }
 
+    public static function agregar()
+    {
+        $content = [];
+
+        $rows = [
+            [
+                ['data' => 'Actividad de Fecha Única (Todo el día)', 'header' => TRUE],
+                'Actividad que durará por un día completo, sin especificar una hora.',
+                'actions' => [
+                    'data' =>  array(
+                        '#type' => 'link',
+                        '#title' => 'Seleccionar',
+                        '#attributes' => ['class' => ['button', 'button--primary']],
+                        '#url' => Url::fromRoute('mancal_cagf.agregarActividades', ['tipo' => 1]),
+                    ),
+                ],
+            ],
+            [
+                ['data' => 'Actividad de Fecha Única (Con hora Inicial)', 'header' => TRUE],
+                'Actividad en un día específico, pero cuenta con una hora específica. Ideal para un concierto, presentación, homenaje...',
+                'actions' => [
+                    'data' =>  array(
+                        '#type' => 'link',
+                        '#title' => 'Seleccionar',
+                        '#attributes' => ['class' => ['button']],
+                        '#url' => Url::fromRoute('mancal_cagf.agregarActividades', ['tipo' => 2]),
+                    ),
+                ],
+            ],
+            [
+                ['data' => 'Actividad durante un periodo (Sin hora)', 'header' => TRUE],
+                'Actividad que durará un periodo de tiempo, sin especificar una hora. Ideal para una Exposición o actividades similares.',
+                'actions' => [
+                    'data' =>  array(
+                        '#type' => 'link',
+                        '#title' => 'Seleccionar',
+                        '#attributes' => ['class' => ['button', 'button--primary']],
+                        '#url' => Url::fromRoute('mancal_cagf.agregarActividades', ['tipo' => 3]),
+                    ),
+                ],
+            ],
+            [
+                ['data' => 'Actividad Repetitiva en un Día de la Semana', 'header' => TRUE],
+                'Se escoge el día de la semana a repetir la actividad, con hora y fecha de inicio y fin. Ideal para talleres o actividades similares.',
+                'actions' => [
+                    'data' =>  array(
+                        '#type' => 'link',
+                        '#title' => 'Seleccionar',
+                        '#attributes' => ['class' => ['button']],
+                        '#url' => Url::fromRoute('mancal_cagf.agregarActividades', ['tipo' => 4]),
+                    ),
+                ],
+            ],
+            /*[
+                ['data' => 'Otro tipo', 'header' => TRUE],
+                'Otro tipo de actividad, todos los campos quedarán disponibles.',
+                'actions' => [
+                    'data' =>  array(
+                        '#type' => 'link',
+                        '#title' => 'Seleccionar',
+                        '#attributes' => ['class' => ['button', 'button--primary']],
+                        '#url' => Url::fromRoute('mancal_cagf.agregarActividades', ['tipo' => 0]),
+                    ),
+                ],
+            ],*/
+        ];
+
+
+        $content['details'] = [
+            '#type' => 'table',
+            '#rows' => $rows,
+            '#attributes' => ['class' => ['seleccionar-tipo']],
+        ];
+
+        return $content;
+    }
+
     public function listarActividades()
     {
         $content = [];
@@ -59,9 +136,9 @@ class ActividadesController extends ControllerBase
         $categoria_busq = CategoriasRepo::buscarCategoria($actividad->categoria);
         $categoria_mostrar = $categoria_busq['nombre'];
 
-        $frequencia_mostrar = '';
+        $frecuencia_mostrar = '';
         if (!empty($actividad->frecuencia_dias)) {
-            $numero_freq = $actividad->frecuencia_dias;
+            $numero_frec = $actividad->frecuencia_dias;
             $dias_semana = [
                 ['num' => 1, 'dia' => 'Domingo'],
                 ['num' => 2, 'dia' => 'Lunes'],
@@ -73,8 +150,8 @@ class ActividadesController extends ControllerBase
             ];
 
             foreach ($dias_semana as $dia) {
-                if ($dia['num'] == $numero_freq) {
-                    $frequencia_mostrar = $dia['dia'];
+                if ($dia['num'] == $numero_frec) {
+                    $frecuencia_mostrar = $dia['dia'];
                 }
             }
         }
@@ -90,8 +167,6 @@ class ActividadesController extends ControllerBase
                 $actividad->descripcion,
             ];
         }
-
-
 
         if ($actividad->encargado) {
             $rows[] = [
@@ -124,21 +199,25 @@ class ActividadesController extends ControllerBase
             date("d/m/Y", strtotime($actividad->inicio_fecha)),
         ];
 
-        $rows[] = [
-            ['data' => 'Fecha Final', 'header' => TRUE],
-            is_null($actividad->final_fecha) ? '' : date("d/m/Y", strtotime($actividad->final_fecha)),
-        ];
+        if ($actividad->final_fecha) {
+            $rows[] = [
+                ['data' => 'Fecha Final', 'header' => TRUE],
+                date("d/m/Y", strtotime($actividad->final_fecha)),
+            ];
+        }
 
-        $rows[] = [
-            ['data' => 'Hora', 'header' => TRUE],
-            $actividad->hora,
-        ];
+        if ($actividad->hora) {
+            $rows[] = [
+                ['data' => 'Hora', 'header' => TRUE],
+                substr($actividad->hora, 0, 5),
+            ];
+        }
 
 
-        if ($actividad->frequencia_mostrar) {
+        if ($actividad->frecuencia_mostrar) {
             $rows[] = [
                 ['data' => 'Día específico en que se repetirá', 'header' => TRUE],
-                $frequencia_mostrar,
+                $frecuencia_mostrar,
             ];
         }
 
