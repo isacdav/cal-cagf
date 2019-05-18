@@ -17,6 +17,26 @@ class ActividadesRepo
         return $result;
     }
 
+    public static function traerPorMes($start, $end)
+    {
+        $fecha_inicio_cal = date("Y-m-d", strtotime($start));
+        $fecha_final_cal = date("Y-m-d", strtotime($end));
+
+        $result = \Drupal::database()->select('actividades', 'a')
+            ->fields('a')
+            ->where('(inicio_fecha >= :inicio_param AND inicio_fecha <= :final_param) OR' . //Si fecha de inicio esta dentro del rango
+                    '(final_fecha >= :inicio_param AND final_fecha <= :final_param) OR' . //Si fecha final esta dentro del rango
+                    '(inicio_fecha <= :inicio_param AND final_fecha >= :final_param)', //Si el rango esta dentro de fechas de inicio y final
+                array(
+                    ':inicio_param' => $fecha_inicio_cal,
+                    ':final_param' => $fecha_final_cal,
+                )
+            )
+            ->execute()
+            ->fetchAll();
+        return $result;
+    }
+
 
     public static function existe($id)
     {

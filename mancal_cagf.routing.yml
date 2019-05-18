@@ -55,14 +55,6 @@ mancal_cagf.eliminarActividad:
   requirements:
     _permission: 'eliminar actividad'
 
-mancal_cagf.getActividades:
-  path: 'api/cal/actividades'
-  defaults:
-    _controller: '\Drupal\mancal_cagf\controller\RestApiController::getActividades'
-    methods: [GET]
-  requirements:
-    _permission: 'API actividades'
-
 mancal_cagf.verCategorias:
   path: '/admin/content/actividades/categorias'
   defaults:
@@ -70,3 +62,11 @@ mancal_cagf.verCategorias:
     _title: 'Ver Categorias'
   requirements:
     _permission: 'ver categorias'
+
+mancal_cagf.getActividades:
+  path: 'api/cal/actividades'
+  defaults:
+    _controller: '\Drupal\mancal_cagf\controller\RestApiController::getActividades'
+    methods: [GET]
+  requirements:
+    _permission: 'API actividades'
