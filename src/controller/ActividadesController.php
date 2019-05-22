@@ -15,6 +15,7 @@ use Drupal\Core\Database\Connection;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\mancal_cagf\Repository\CategoriasRepo;
 
+//Controlador de actividades
 class ActividadesController extends ControllerBase
 {
     protected $formBuilder;
@@ -37,6 +38,7 @@ class ActividadesController extends ControllerBase
         );
     }
 
+    //Pagina que muestra los tipos de actividades que se pueden agregar segun la fecha
     public static function agregar()
     {
         $content = [];
@@ -104,7 +106,6 @@ class ActividadesController extends ControllerBase
             ],*/
         ];
 
-
         $content['details'] = [
             '#type' => 'table',
             '#rows' => $rows,
@@ -127,16 +128,21 @@ class ActividadesController extends ControllerBase
 
     public function detallarActividad($actividad, $js = 'nojs')
     {
+        //Si hay error
         if ($actividad == 'invalid') {
             drupal_set_message(t('Actividad no valida'), 'error');
             return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
         }
 
+        //Mensaje por si no se encuentra la categoría correspondiente
         $categoria_mostrar = 'Ocurrió un error al mostrar la categoría.';
+        //Trae la categoria
         $categoria_busq = CategoriasRepo::buscarCategoria($actividad->categoria);
+        //La asigna a la variable
         $categoria_mostrar = $categoria_busq['nombre'];
 
         $frecuencia_mostrar = '';
+        //Si hay dia de frequencia, la busca y la asigna
         if (!empty($actividad->frecuencia_dias)) {
             $numero_frec = $actividad->frecuencia_dias;
             $dias_semana = [
@@ -156,6 +162,8 @@ class ActividadesController extends ControllerBase
             }
         }
 
+        //Crea los rows
+        //Asigna el titulo a mostrar
         $rows[] = [
             ['data' => 'Título', 'header' => TRUE],
             $actividad->titulo,
@@ -199,6 +207,7 @@ class ActividadesController extends ControllerBase
             date("d/m/Y", strtotime($actividad->inicio_fecha)),
         ];
 
+        //Con los campos opcionales, comprueba si no es nulo
         if ($actividad->final_fecha) {
             $rows[] = [
                 ['data' => 'Fecha Final', 'header' => TRUE],
@@ -213,8 +222,7 @@ class ActividadesController extends ControllerBase
             ];
         }
 
-
-        if ($actividad->frecuencia_mostrar) {
+        if ($actividad->frecuencia_dias) {
             $rows[] = [
                 ['data' => 'Día específico en que se repetirá', 'header' => TRUE],
                 $frecuencia_mostrar,
@@ -240,6 +248,7 @@ class ActividadesController extends ControllerBase
             '#attributes' => ['class' => ['actividad-detalle']],
         ];
 
+        //Botones
         $content['edit'] = [
             '#type' => 'link',
             '#title' => 'Editar',
@@ -254,6 +263,7 @@ class ActividadesController extends ControllerBase
             '#url' => Url::fromRoute('mancal_cagf.eliminarActividad', ['id' => $actividad->id_actividad]),
         ];
 
+        //Si js es ajax entonces no abre una pagina para ver detalles
         if ($js == 'ajax') {
             $modal_title = t('Actividad #@id_actividad', ['@id_actividad' => $actividad->id_actividad]);
             $options = [

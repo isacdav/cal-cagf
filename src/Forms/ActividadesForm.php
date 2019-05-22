@@ -21,6 +21,7 @@ class ActividadesForm extends FormBase
 
     public function buildForm(array $form, FormStateInterface $form_state, $actividad = NULL, $tipo = NULL)
     {
+        //Si no hay actividad
         if ($actividad) {
             if ($actividad == 'invalid') {
                 drupal_set_message(t('Actividad errónea'), 'error');
@@ -32,12 +33,13 @@ class ActividadesForm extends FormBase
             ];
         }
 
+        //Trae las categorias
         $categorias_lista = CategoriasRepo::getCategorias();
         if (!$categorias_lista) {
             drupal_set_message(t('Error, no se encuentran categorias'), 'error');
             return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
         }
-
+        //Recorre las categorias para ponerlas en un array con las ociones
         $categorias_select = ['' => 'Seleccionar'];
         foreach ($categorias_lista as $cat) {
             $categorias_select[$cat['id_cat']] = $cat['nombre'];
@@ -45,6 +47,8 @@ class ActividadesForm extends FormBase
 
         $form['#attributes']['novalidate'] = '';
 
+        //Valida si hay un objeto actividad, para saber si se esta editando o no
+        //Si se edita, que sea posible de cancelar
         if ($actividad) {
             $form['cancelacion'] = [
                 '#type' => 'details',
@@ -62,6 +66,7 @@ class ActividadesForm extends FormBase
                 '#type' => 'textarea',
                 '#title' => t('Motivo de Cancelación'),
                 '#default_value' => ($actividad) ? $actividad->motivo_cancelacion : 0,
+                '#maxlength' => 500,
             ];
         }
 
@@ -75,12 +80,15 @@ class ActividadesForm extends FormBase
             '#type' => 'textfield',
             '#title' => t('Titulo'),
             '#required' => TRUE,
+            '#maxlength' => 150,
             '#default_value' => ($actividad) ? $actividad->titulo : '',
         ];
 
         $form['general']['descripcion'] = [
             '#type' => 'textarea',
             '#title' => t('Descripción'),
+            '#required' => TRUE,
+            '#maxlength' => 1000,
             '#default_value' => ($actividad) ? $actividad->descripcion : '',
         ];
 
@@ -101,18 +109,21 @@ class ActividadesForm extends FormBase
         $form['contacto']['encargado'] = [
             '#type' => 'textfield',
             '#title' => t('Persona a Cargo'),
+            '#maxlength' => 300,
             '#default_value' => ($actividad) ? $actividad->encargado : '',
         ];
 
         $form['contacto']['contacto'] = [
             '#type' => 'textfield',
             '#title' => t('Contacto'),
+            '#maxlength' => 400,
             '#default_value' => ($actividad) ? $actividad->contacto : '',
         ];
 
         $form['contacto']['link_publicacion_fb'] = [
             '#type' => 'textfield',
             '#title' => t('Enlace a publicación de Facebook'),
+            '#maxlength' => 300,
             '#default_value' => ($actividad) ? $actividad->link_publicacion_fb : '',
         ];
 
@@ -186,14 +197,16 @@ class ActividadesForm extends FormBase
     {
         parent::validateForm($form, $form_state);
 
+        //Validacion de hora
         $hora = $form_state->getValue('hora');
         if (!empty($hora)) {
-            if (!preg_match('/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', $hora)) {
+            if (!preg_match('/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', $hora)) { //Si tiene el formato de hora
                 $form_state->setErrorByName('hora', $this->t('La hora brindada no está en el formato solicitado. "00:00".'));
             }
         }
 
-        $fecha_final = $form_state->getValue('final_fecha');
+        $fecha_final = $form_state->getValue('final_fecha'); //Toma la fecha fina
+        //Si la fecha final es menor que la inicial
         if (date("d/m/Y", strtotime($fecha_final)) != date("d/m/Y", strtotime('31/12/1969'))) {
             $fecha_inicial = $form_state->getValue('inicio_fecha');
 
@@ -210,6 +223,7 @@ class ActividadesForm extends FormBase
 
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
+        //Toma los datos introducidos
         $id = $form_state->getValue('id_actividad');
         $fecha_final = $form_state->getValue('final_fecha');
         $frecuencia_dias = $form_state->getValue('frecuencia_dias');
@@ -217,6 +231,7 @@ class ActividadesForm extends FormBase
         $cancelado = $form_state->getValue('cancelado');
         $motivo_cancelacion = $form_state->getValue('motivo_cancelacion');
 
+        //Los pone en el array fields
         $fields = [
             'titulo' => SafeMarkup::checkPlain($form_state->getValue('titulo')),
             'descripcion' => $form_state->getValue('descripcion'),
@@ -227,31 +242,36 @@ class ActividadesForm extends FormBase
             'link_publicacion_fb' => $form_state->getValue('link_publicacion_fb'),
         ];
 
+        //valida que haya fecha final
         if (date("d/m/Y", strtotime($fecha_final)) != date("d/m/Y", strtotime('31/12/1969'))) {
             $fields['final_fecha'] = $fecha_final;
         } else {
             $fields['final_fecha'] = NULL;
         }
 
+        //Valida que haya hora
         if (!empty($hora)) {
             $fields['hora'] = $hora;
         } else {
             $fields['hora'] = NULL;
         }
 
+        //Valida que haya frecuencia
         if (!empty($frecuencia_dias)) {
             $fields['frecuencia_dias'] = $frecuencia_dias;
         } else {
             $fields['frecuencia_dias'] = NULL;
         }
 
+        //Si se esta editando
         if (!empty($id) && ActividadesRepo::existe($id)) {
             $fields['cancelado'] = $cancelado;
             $fields['motivo_cancelacion'] = $motivo_cancelacion;
-
+            //Actualiza en bd
             ActividadesRepo::actualizar($id, $fields);
             $message = 'Actividad ' . $fields['titulo'] . ' actualizada';
-        } else {
+        } else { //Si se esta creando una nueva
+            //Guarda en bd
             ActividadesRepo::agregar($fields);
             $message = 'Nueva actividad ' . $fields['titulo'] . ' guardada';
         }

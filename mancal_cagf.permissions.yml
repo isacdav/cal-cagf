@@ -20,5 +20,5 @@ eliminar actividad:
   restrict access: true
 
 API actividades:
-  title: 'Rest API Actividades'
-  description: 'Rest API que consumirá el calendario'
+  title: 'API Actividades'
+  description: 'API que consumirá el calendario'

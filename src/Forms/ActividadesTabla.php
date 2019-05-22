@@ -32,6 +32,7 @@ class ActividadesTabla implements FormInterface
 
     public function buildForm(array $form, FormStateInterface $form_state)
     {
+        //Se crea el array de la tabla
         $header = [
             ['data' => t('Id'), 'field' => 'a.id_actividad'],
             ['data' => t('Título'), 'field' => 'a.titulo'],
@@ -62,10 +63,9 @@ class ActividadesTabla implements FormInterface
                 ],
             ];
 
+            //Crea los links para ajax
             $view_url = Url::fromRoute('mancal_cagf.detallarActividad', ['actividad' => $row->id_actividad, 'js' => 'nojs']);
-
             $ajax_view_url = Url::fromRoute('mancal_cagf.detallarActividad', ['actividad' => $row->id_actividad, 'js' => 'ajax'], $ajax_link_attributes);
-
             $ajax_view_link = Drupal::l($row->titulo, $ajax_view_url);
 
             $drop_button = [
@@ -86,6 +86,7 @@ class ActividadesTabla implements FormInterface
                 ],
             ];
 
+            //Cuando se tiene, se agrega la actividad
             $rows[$row->id_actividad] = [
                 [sprintf("%04s", $row->id_actividad)],
                 [$ajax_view_link],

@@ -19,7 +19,7 @@
                 'descripcion' => array(
                     'type' => 'varchar',
                     'length' => 1000,
-                    'not null' => false,
+                    'not null' => true,
                 ), //f detalle
                 'encargado' => array(
                     'type' => 'varchar',

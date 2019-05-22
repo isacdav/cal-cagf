@@ -66,7 +66,7 @@ mancal_cagf.verCategorias:
 mancal_cagf.getActividades:
   path: 'api/cal/actividades'
   defaults:
-    _controller: '\Drupal\mancal_cagf\controller\RestApiController::getActividades'
+    _controller: '\Drupal\mancal_cagf\controller\ApiController::getActividades'
     methods: [GET]
   requirements:
     _permission: 'API actividades'
