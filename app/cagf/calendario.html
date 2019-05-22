@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>CAFG | Calendario</title>
+    <link rel="icon" href="resources/img/favicon.ico">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+    <link href='packages/core/main.css' rel='stylesheet' />
+    <link href='packages/daygrid/main.css' rel='stylesheet' />
+    <script src='packages/core/main.js'></script>
+    <script src='packages/interaction/main.js'></script>
+    <script src='packages/daygrid/main.js'></script>
+    <script src='packages/core/locales/es.js'></script>
+    <script src="resources/js/calendario.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Casa Alfredo González Flores</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nosotros.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Calendario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="formulario.html">Formulario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="requisitos.html">Requisitos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row cont-general">
+            <div class="col-md-1"></div>
+            <div class="col-md-9">
+                <div id='calendar'></div>
+            </div>
+            <div class="col-md-2 cal-categorias">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Categorías</h5>
+                    </div>
+                    <div class="card-body small">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #ff8264;"></div>
+                            </div>
+                            <div class="col-9">Taller</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #7fa99b;"></div>
+                            </div>
+                            <div class="col-9">Exposición</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #b97ab0;"></div>
+                            </div>
+                            <div class="col-9">Baile</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #4592af;"></div>
+                            </div>
+                            <div class="col-9">Música</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #f6e79c;"></div>
+                            </div>
+                            <div class="col-9">Literatura</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #c5f8c8;"></div>
+                            </div>
+                            <div class="col-9">Teatro</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #c19191;"></div>
+                            </div>
+                            <div class="col-9">Cultura Pop</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #c5c5c5;"></div>
+                            </div>
+                            <div class="col-9">Homenaje</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #bfcd7e;"></div>
+                            </div>
+                            <div class="col-9">Tertulia</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #c7b198;"></div>
+                            </div>
+                            <div class="col-9">Otros</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="circulo-cat" style="background-color: #c82121;"></div>
+                            </div>
+                            <div class="col-9">Cancelado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title-modal"></h5>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modal-categoria" class="small font-weight-bold"></p>
+                        <hr class="hr-modal">
+                        <div>
+                            <small><b>Descripción:</b></small>
+                            <p id="desc-modal"></p>
+                        </div>
+                        <div id="encargado-modal-div" style="display: none;">
+                            <hr class="hr-modal">
+                            <small><b>A Cargo:</b></small>
+                            <p id="encargado-modal"></p>
+                        </div>
+                        <div id="fecha-modal-div">
+                            <hr class="hr-modal">
+                            <small><b>Fecha:</b></small>
+                            <p id="fecha-modal"></p>
+                        </div>
+                        <div id="contacto-modal-div" style="display: none;">
+                            <hr class="hr-modal">
+                            <small><b>Contactar a:</b></small>
+                            <p id="contacto-modal"></p>
+                        </div>
+                        <div id="modal-canceled-div" style="display: none;">
+                            <hr class="hr-modal">
+                            <span class="badge badge-danger">Cancelado</span>
+                            <p id="cancelado-modal"></p>
+                        </div>
+                        <div id="modal-facebook-div" style="display: none;">
+                            <hr class="hr-modal">
+                            <a id="faceb-modal" target="_blank" class="btn btn-outline-primary btn-sm">Publicación en
+                                Facebook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/popper.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+
+    <footer class="page-footer font-small blue">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="#">Casa Alfredo González Flores</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+</body>
+
+</html>
