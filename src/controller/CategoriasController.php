@@ -11,8 +11,10 @@ use Drupal\mancal_cagf\Repository\CategoriasRepo;
 
 class CategoriasController extends ControllerBase
 {
+    //La funcion solamente es que se puedan ver las categorias y los colores
     public function verCategorias()
     {
+        //Pide las categorias
         $categorias_lista = CategoriasRepo::getCategorias();
 
         if (!$categorias_lista) {
@@ -20,6 +22,7 @@ class CategoriasController extends ControllerBase
             return new RedirectResponse(Drupal::url('mancal_cagf.listarActividades'));
         }
 
+        //Crea y llena la tabla
         $header = [
             ['data' => t('Nombre'), 'field' => 'c.nombre'],
             ['data' => t('Color'), 'field' => 'c.color'],

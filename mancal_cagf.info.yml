@@ -1,5 +1,5 @@
 name: Actividades CAGF
-description: Mantenimiento de las actividades que re realizan en la Casa Alfredo Gonzáles Flores que luego serán solicitadas para mostrar en el Calendario. Además el REST API para consumir las actividades.
+description: Mantenimiento de las actividades que re realizan en la Casa Alfredo Gonzáles Flores que luego serán solicitadas para mostrar en el Calendario. Además el API para consumir las actividades desde el calendario.
 core: 8.x
 package: Custom
 type: module
