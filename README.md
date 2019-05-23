@@ -16,10 +16,18 @@ Y el API al cual el calendario hará la solicitud.
 - Se debe descomprimir el modulo en la carpeta **modules** de Drupal.
 - Luego se procede a la sección de **Ampliar** en Drupal.
 - Seleccionar **Actividades CAGF**.
-- Por último click en **instalar**.
+- Por último click en **Instalar**.
 
-### 1.2. Hacer GET al API
-Para acceder al API, se deberá hacer mediante:
+### 1.2. Permisos para el API
+Se debe cambiar el permiso, para que pueda ser accedido el API desde cualquier lugar.
+- Ir a **Usuarios** en el sitio de Drupal.
+- Luego a **Permisos**.
+- Donde se encuentran los permisos del módulo **Actividades CAGF**.
+- Activar **Usuario Anónimo** al permiso **API de Actividades**.
+- Por último click en **Guardar Permisos**.
+
+### 1.3. Acceder al API
+Para acceder por medio del método GET al API, se deberá hacer mediante:
 ```
 http://www.sitio.com/api/cal/actividades?start='fecha_s'&end='fecha_e'
 ```
