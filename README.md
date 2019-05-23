@@ -2,7 +2,7 @@
 
 ## ¿En qué consiste?
 Es un proyecto para cumplir el _Trabajo Comunal Universitario_.
-Se trata de una página web, con información sobre la Casa de la Cultura de Heredia, y lo principal, un módulo de Drupal y un calendario para que la comunidad pueda estar informada de las actividades que se realizan en la Casa AGF.
+Se trata de una página web, con información sobre la Casa de la Cultura de Heredia, y lo principal, un módulo de Drupal y un calendario para que la comunidad pueda estar informada de las actividades que se realizan en la Casa Alfredo Gonzaléz Flores.
 
 ## Pre-Requisitos 📋
 - Servidor PHP.
