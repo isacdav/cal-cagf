@@ -5,7 +5,7 @@ var options = {
     day: 'numeric'
 };
 
-const direccion_API = "http://www.dircultura.tst/api/cal/actividades";
+const direccion_API = "http://localhost/calendarionuevo/api/cal/actividades";
 
 //Se agrega el calendario
 document.addEventListener('DOMContentLoaded', function () {
