@@ -10,7 +10,7 @@
     margin-top: 60px;
     text-align: justify;
     font-family: 'Hind', sans-serif;
-    font-size: 19px;
+    font-size: 17px;
 }
 
 hr {
@@ -31,8 +31,6 @@ hr {
     margin-top: 25px;
     font-family: 'Hind', sans-serif;
 }
-
-
 
 
 /*aqui termina*/
@@ -85,6 +83,10 @@ hr {
 /* Portrait and Landscape */
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+
+    .txtrequisitos{
+        font-size: 34px;
+    }
     .container {
         max-width: 900px;
     }
@@ -105,6 +107,9 @@ hr {
     }
     .page-footer {
         font-size: 42px;
+    }
+    .containercel{
+        font-size: 50px !important;
     }
 }
 
