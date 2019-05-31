@@ -1,7 +1,7 @@
 # Calendario CAGF
 
 ## ¿En qué consiste?
-Es un proyecto para cumplir el _Trabajo Comunal Universitario_.
+Es un proyecto para cumplir nuestro _Trabajo Comunal Universitario_ en la universidad Fidélitas.
 Se trata de una página web, con información sobre la Casa de la Cultura de Heredia, y lo principal, un módulo de Drupal y un calendario para que la comunidad pueda estar informada de las actividades que se realizan en la Casa Alfredo Gonzaléz Flores.
 
 ## Pre-Requisitos 📋
@@ -50,7 +50,7 @@ http://www.sitio.com/app/cagf
 ```
 
 ## 3. Autores 👨‍💻
-* **Isaac Alfaro** | [isaac16av](https://github.com/isaac16av)
+* **Isaac Alfaro** | [isacdav](https://github.com/isacdav)
 * **Fabián Aguilar** | [Faac97](https://github.com/faac97)
 
 ## 4. Desarrollado con 🛠️
